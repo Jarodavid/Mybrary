@@ -37,6 +37,15 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get('/company',async(req,res) => {
+  try{
+      const companies = await Company.find({ $or: [ { "company.courses": "CPE"}, { "company.courses": "ECE"}, { "company.courses": "IT"}, { "company.courses": "CS"}, { "company.courses": "CHE"}, { "company.courses": "MATE"}, { "company.courses": "FT"} ] },{"company.courses":0})
+      res.json(companies) 
+  }catch(err){
+      res.status(500).json({message:err.message})
+  }
+})
+
 // New Book Route
 router.get('/new', async (req, res) => {
   renderNewPage(res, new Book())
